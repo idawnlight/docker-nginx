@@ -9,7 +9,7 @@ jobs:
     - uses: actions/checkout@v1
     - uses: jerray/publish-docker-action@master
       with:
-        username: metowolf
+        username: idawnlight
         password: ${{ secrets.DOCKER_TOKEN }}
-        repository: metowolf/nginx
+        repository: idawnlight/nginx
         auto_tag: true
