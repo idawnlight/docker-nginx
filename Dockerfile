@@ -2,8 +2,8 @@ FROM rust:1.43-alpine as builder
 
 LABEL maintainer="metowolf <i@i-meto.com>"
 
-ARG NGINX_VERSION=1.17.10
-# ARG OPENSSL_VERSION=1.1.1d
+ARG NGINX_VERSION=1.19.0
+ARG OPENSSL_VERSION=1.1.1g
 
 RUN set -ex \
     && apk upgrade \
@@ -50,13 +50,13 @@ RUN set -ex \
     && (cd zlib; make -f Makefile.in distclean) \
     \
     # Quiche
-    && git clone https://github.com/cloudflare/quiche --depth=1 \
-    && (cd quiche; git submodule update --init) \
-    && patch -p01 --ignore-whitespace < ./quiche/extras/nginx/nginx-1.16.patch \
+    # && git clone https://github.com/cloudflare/quiche --depth=1 \
+    # && (cd quiche; git submodule update --init) \
+    # && patch -p01 --ignore-whitespace < ./quiche/extras/nginx/nginx-1.16.patch \
     \
     # OpenSSL
-    # && curl -fSL https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz -o openssl-${OPENSSL_VERSION}.tar.gz \
-    # && tar -xzf openssl-${OPENSSL_VERSION}.tar.gz \
+    && curl -fSL https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz -o openssl-${OPENSSL_VERSION}.tar.gz \
+    && tar -xzf openssl-${OPENSSL_VERSION}.tar.gz \
     \
     # Sticky
     && mkdir nginx-sticky-module-ng \
@@ -116,8 +116,9 @@ RUN cd /usr/src/nginx-$NGINX_VERSION \
         --add-module=/usr/src/nginx-${NGINX_VERSION}/ngx_brotli \
         --add-module=/usr/src/nginx-${NGINX_VERSION}/nginx-sticky-module-ng \
         --add-module=/usr/src/nginx-${NGINX_VERSION}/headers-more-nginx-module \
-        --with-openssl=/usr/src/nginx-${NGINX_VERSION}/quiche/deps/boringssl \
-        --with-quiche=/usr/src/nginx-${NGINX_VERSION}/quiche \
+        --with-openssl=/usr/src/nginx-${NGINX_VERSION}/openssl-${OPENSSL_VERSION} \
+        # --with-openssl=/usr/src/nginx-${NGINX_VERSION}/quiche/deps/boringssl \
+        # --with-quiche=/usr/src/nginx-${NGINX_VERSION}/quiche \
     && make -j$(getconf _NPROCESSORS_ONLN) \
     && make install \
     && rm -rf /etc/nginx/html/ \
