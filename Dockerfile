@@ -111,7 +111,7 @@ RUN cd /usr/src/nginx-$NGINX_VERSION \
         --with-compat \
         --with-file-aio \
         --with-http_v2_module \
-        --with-http_v3_module \
+        # --with-http_v3_module \
         --with-zlib=/usr/src/nginx-${NGINX_VERSION}/zlib \
         --add-module=/usr/src/nginx-${NGINX_VERSION}/ngx_brotli \
         --add-module=/usr/src/nginx-${NGINX_VERSION}/nginx-sticky-module-ng \
