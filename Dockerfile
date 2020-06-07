@@ -1,6 +1,8 @@
 FROM rust:1.43-alpine as builder
 
-LABEL maintainer="metowolf <i@i-meto.com>"
+# Appreciate metowolf for this great work!
+# LABEL maintainer="metowolf <i@i-meto.com>"
+LABEL maintainer="idawnlight <idawn@live.com>"
 
 ARG NGINX_VERSION=1.19.0
 ARG OPENSSL_VERSION=1.1.1g
@@ -137,7 +139,9 @@ COPY config/logrotate /etc/nginx/logrotate
 
 FROM alpine:3.11
 
-LABEL maintainer="metowolf <i@i-meto.com>"
+# Appreciate metowolf for this great work!
+# LABEL maintainer="metowolf <i@i-meto.com>"
+LABEL maintainer="idawnlight <idawn@live.com>"
 
 COPY --from=builder /etc/nginx /etc/nginx
 COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
