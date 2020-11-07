@@ -4,8 +4,8 @@ FROM rust:1.43-alpine as builder
 # LABEL maintainer="metowolf <i@i-meto.com>"
 LABEL maintainer="idawnlight <idawn@live.com>"
 
-ARG NGINX_VERSION=1.19.0
-ARG OPENSSL_VERSION=1.1.1g
+ARG NGINX_VERSION=1.19.1
+ARG OPENSSL_VERSION=1.1.1h
 
 RUN set -ex \
     && apk upgrade \
